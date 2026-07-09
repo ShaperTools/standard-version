@@ -1,0 +1,20 @@
+name: publish-if-new-release
+on: [push]
+jobs:
+  publish-if-new-release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          always-auth: true
+          registry-url: 'https://npm.pkg.github.com/'
+      - run: yarn install --ignore-scripts --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: yarn build
+      - run: yarn publish --new-version $(cat package.json | jq -r '.version')
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
