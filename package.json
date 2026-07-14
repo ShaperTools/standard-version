@@ -15,10 +15,7 @@
       "tmp/**"
     ]
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/conventional-changelog/standard-version.git"
-  },
+  "repository": "git://github.com/ShaperTools/standard-version.git",
   "engines": {
     "node": ">=4.0"
   },
